@@ -45,23 +45,40 @@ function BetterProfile_Menu_Buttons(&$areas)
 				'href' => $scripturl . '?action=profile;area=forumprofile',
 				'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
 			),
+			'theme' => array(
+				'title' => $txt['theme'],
+				'href' => $scripturl . '?action=profile;area=theme',
+				'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
+			),
+			'posts' => array(
+				'title' => $txt['showPosts'],
+				'href' => $scripturl . '?action=profile;area=showposts',
+				'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
+			),
 		),
 	);
+	if (isset($txt['bookmarks']))
+	{
+		$areas['profile']['sub_buttons']['bookmarks'] = array(
+			// [Bookmarks] button
+			'bookmarks' => array(
+				'title' => $txt['bookmarks'],
+				 'href' => $scripturl . '?action=bookmarks',
+				 'show' => allowedTo('make_bookmarks'),
+			),
+		);
+	}
 	if (file_exists($sourcedir . '/Buddies.php'))
 	{
 		loadLanguage('UltimateProfile');
 		$areas['profile']['sub_buttons']['ultimate'] = array(
 			'title' => $txt['profile_customized'],
 			'href' => $scripturl . '?action=profile;area=customized',
-			'show' => true,
+			'show' => allowedTo(array('edit_ultimate_profile_own', 'edit_ultimate_profile_any')),
 		);
 	}
-	$areas['profile']['sub_buttons'] += array(		
-		'posts' => array(
-			'title' => $txt['showPosts'],
-			'href' => $scripturl . '?action=profile;area=showposts',
-			'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
-		),
+		
+	$areas['profile']['sub_buttons'] += array(
 		'notification' => array(
 			'title' => $txt['notification'],
 			'href' => $scripturl . '?action=profile;area=notification',
@@ -72,11 +89,6 @@ function BetterProfile_Menu_Buttons(&$areas)
 			'href' => $scripturl . '?action=profile;area=lists;sa=ignore',
 			'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
 			'is_last' => true,
-		),
-		'theme' => array(
-			'title' => $txt['theme'],
-			'href' => $scripturl . '?action=profile;area=theme',
-			'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
 		),
 	);
 	
