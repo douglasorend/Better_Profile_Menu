@@ -27,12 +27,16 @@ function BetterProfile_Load_Theme()
 
 function BetterProfile_Profile_Hook(&$profile_areas)
 {
-	global $user_info, $scripturl, $txt;
+	global $user_info, $scripturl, $txt, $context;
 
 	// Skip this if we are not requesting the layout of the moderator CPL:
 	if (empty($user_info['id']) || !isset($_GET['area']) || !isset($_GET['u']) || $_GET['area'] != 'betterprofile_ucp')
 		return;
 
+	// Keep from triggering the Forum Hard Hit mod:
+	if (!empty($context['HHP_time']))
+		unset($_SESSION['HHP_Visits'][$context['HHP_time']]);
+			
 	// Rebuild the Profile menu:
 	$cached = array();
 	foreach ($profile_areas as $id1 => $area1)
@@ -76,13 +80,13 @@ function BetterProfile_Profile_Hook(&$profile_areas)
 	}
 
 	// Cache the menu we just built for the calling user:
-	cache_put_data('betterprofile_' . $user_info['id'], $cached, 86400);
+	echo serialize($cached);
 	exit;
 }
 
 function BetterProfile_Menu_Buttons(&$areas)
 {
-	global $txt, $scripturl, $user_info, $sourcedir;
+	global $txt, $scripturl, $user_info;
 
 	// Gotta prevent an infinite loop here:
 	if (isset($_GET['action']) && $_GET['action'] == 'profile' && isset($_GET['area']) && $_GET['area'] == 'betterprofile_ucp')
@@ -94,17 +98,18 @@ function BetterProfile_Menu_Buttons(&$areas)
 
 	// Attempt to get the cached Profile menu:
 	$Profile = &$areas['profile'];
-	if (($cached = cache_get_data('betterprofile_' . $user_info['id'], 86400)) == null)
+	if (($cached = cache_get_data('betterprofile_' . $user_info['id'], 86400)) == null || !is_array($cached))
 	{
 		// Force the profile code to build our new Profile menu:
-		@file_get_contents($scripturl . '?action=profile;area=betterprofile_ucp;u=' . $user_info['id']);
-		$cached = cache_get_data('betterprofile_' . $user_info['id'], 86400);
+		$contents = @file_get_contents($scripturl . '?action=profile;area=betterprofile_ucp;u=' . $user_info['id']);
+		$cached = unserialize($contents);
+		cache_put_data('betterprofile_' . $user_info['id'], $cached, 86400);
 	}
 	if (is_array($cached))
 		$Profile['sub_buttons'] = $cached;
 
 	// Define the rest of the Profile menu:
-	if (file_exists($sourcedir . '/Bookmarks.php'))
+	if (isset($areas['bookmarks']))
 	{
 		unset($areas['bookmarks']);
 		$areas['profile']['sub_buttons']['bookmarks'] = array(

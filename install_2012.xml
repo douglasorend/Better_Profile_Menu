@@ -3,7 +3,7 @@
 <modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
 <id>dougiefresh:BetterProfileMenu</id>
 <name>Better Profile Menu</name>
-<version>2.3</version>
+<version>2.4</version>
 
 <file name="$sourcedir/Subs.php">
 	<operation error="ignore">
@@ -11,14 +11,10 @@
 	// Input exceeds 4096.
 	if(strlen($str) > 4096)
 		return false;
-]]></search>
+
+	// Input  is not a string.]]></search>
 		<add><![CDATA[{
-/*
-	// Input exceeds 4096.
-	if(strlen($str) > 4096)
-		return false;
-*/
-]]></add>
+	// Input  is not a string.]]></add>
 	</operation>
 </file>
 </modification>
