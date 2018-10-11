@@ -31,23 +31,48 @@ function BetterProfile_Menu_Buttons(&$areas)
 			unset($areas['profile']['sub_buttons'][$key]['is_last']);
 	}
 
-	// Redefine the Profiles menu:
+	// Add the "Theme" link to the Profile menu:
 	$areas['profile']['sub_buttons']['theme'] = array(
 		'title' => $txt['theme'],
 		'href' => $scripturl . '?action=profile;area=theme',
 		'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
 	);
+	
+	// If "myposts" element isn't defined, define it, then add the "Show Topics" link underneath it:
 	if (empty($areas['profiles']['sub_buttons']['myposts']))
 	{
-		$areas['profile']['sub_buttons']['posts'] = array(
-			'title' => $txt['showPosts'],
-			'href' => $scripturl . '?action=profile;area=showposts',
-			'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
+		$areas['profile']['sub_buttons'] += array(
+			'myposts' => array(
+				'title' => $txt['showPosts'],
+				'href' => $scripturl . '?action=profile;area=showposts',
+				'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
+			),
+			'mytopics' => array(
+				'title' => $txt['showTopics'],
+				'href' => $scripturl . '?action=profile;area=showposts;sa=topics',
+				'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
+			),
 		);
 	}
+	else
+	{
+		$new = array();
+		foreach ($areas['profile']['sub_buttons'] as $id => $area)
+		{
+			$new[$id] = $area;
+			if ($id == 'myposts')
+				$new['mytopics'] = array(
+					'title' => $txt['showTopics'],
+					'href' => $scripturl . '?action=profile;area=showposts;sa=topics',
+					'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
+				);
+		}
+		$areas['profile']['sub_buttons'] = $new;
+	}
+	
+	// Define the rest of the Profile menu:
 	if (file_exists($sourcedir . '/Bookmarks.php'))
 	{
-		// [Bookmarks] button
 		unset($areas['bookmarks']);
 		$areas['profile']['sub_buttons']['bookmarks'] = array(
 			'title' => $txt['bookmarks'],
