@@ -24,6 +24,13 @@ function BetterProfile_Menu_Buttons(&$areas)
 	$old_txt = $txt;
 	loadLanguage('Profile');
 	
+	// Remove the is_last item
+	foreach ($areas['profile']['sub_buttons'] as $key => $value)
+	{
+		if (!empty($value['is_last']))
+			unset($areas['profile']['sub_buttons'][$key]['is_last']);
+	}
+
 	// Redefine the Profiles menu:
 	$areas['profile']['sub_buttons']['theme'] = array(
 		'title' => $txt['theme'],
