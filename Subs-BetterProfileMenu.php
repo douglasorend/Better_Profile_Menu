@@ -4,27 +4,27 @@
 *********************************************************************************
 * This program is distributed in the hope that it is and will be useful, but
 * WITHOUT ANY WARRANTIES; without even any implied warranty of MERCHANTABILITY
-* or FITNESS FOR A PARTICULAR PURPOSE, 
+* or FITNESS FOR A PARTICULAR PURPOSE,
 **********************************************************************************/
-if (!defined('SMF')) 
+if (!defined('SMF'))
 	die('Hacking attempt...');
-	
+
 /**********************************************************************************
 * Better Profile Menu hook
 **********************************************************************************/
 function BetterProfile_Menu_Buttons(&$areas)
 {
-	global $txt, $scripturl, $context, $sourcedir;
-	
+	global $txt, $scripturl, $context, $sourcedir, $boarddir;
+
 	// DO NOT RUN if $_GET['xml'] is defined!
 	if (isset($_GET['xml']))
 		return;
-		
+
 	// Load the Profile language, preserving the "time_format" string:
 	$loaded = LoadLanguage('', '', false, false, true);
 	$old_txt = $txt;
 	loadLanguage('Profile');
-	
+
 	// Remove the is_last item
 	foreach ($areas['profile']['sub_buttons'] as $key => $value)
 	{
@@ -38,22 +38,26 @@ function BetterProfile_Menu_Buttons(&$areas)
 		'href' => $scripturl . '?action=profile;area=theme',
 		'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
 	);
-	
+
 	// If "myposts" element isn't defined, define it, then add the "Show Topics" link underneath it:
 	if (empty($areas['profiles']['sub_buttons']['myposts']))
 	{
-		$areas['profile']['sub_buttons'] += array(
-			'myposts' => array(
-				'title' => $txt['showPosts'],
-				'href' => $scripturl . '?action=profile;area=showposts',
-				'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
-			),
-			'mytopics' => array(
-				'title' => $txt['showTopics'],
-				'href' => $scripturl . '?action=profile;area=showposts;sa=topics',
-				'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
-			),
+		$areas['profile']['sub_buttons']['myposts'] = array(
+			'title' => $txt['showPosts'],
+			'href' => $scripturl . '?action=profile;area=showposts',
+			'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
 		);
+		$areas['profile']['sub_buttons']['mytopics'] = array(
+			'title' => $txt['showTopics'],
+			'href' => $scripturl . '?action=profile;area=showposts;sa=topics',
+			'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
+		);
+		if (file_exists($boarddir . '/Themes/default/Profile-Participation.template.php'))
+			$areas['profile']['sub_buttons']['mythreads'] = array(
+				'title' => $txt['showThreads'],
+				'href' => $scripturl . '?action=profile;area=showposts;sa=thrads',
+				'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
+			);
 	}
 	else
 	{
@@ -62,15 +66,23 @@ function BetterProfile_Menu_Buttons(&$areas)
 		{
 			$new[$id] = $area;
 			if ($id == 'myposts')
+			{
 				$new['mytopics'] = array(
 					'title' => $txt['showTopics'],
 					'href' => $scripturl . '?action=profile;area=showposts;sa=topics',
 					'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
 				);
+				if (file_exists($boarddir . '/Themes/default/Profile-Participation.template.php'))
+					$new['mythreads'] = array(
+						'title' => $txt['showThreads'],
+						'href' => $scripturl . '?action=profile;area=showposts;sa=thrads',
+						'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
+				);
+			}
 		}
 		$areas['profile']['sub_buttons'] = $new;
 	}
-	
+
 	// Define the rest of the Profile menu:
 	if (file_exists($sourcedir . '/Bookmarks.php'))
 	{
@@ -99,18 +111,16 @@ function BetterProfile_Menu_Buttons(&$areas)
 			'show' => allowedTo(array('profile_view_own', 'profile_view_any')),
 		);
 	}
-	$areas['profile']['sub_buttons'] += array(
-		'notification' => array(
-			'title' => $txt['notification'],
-			'href' => $scripturl . '?action=profile;area=notification',
-			'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
-		),
-		'ignore' => array(
-			'title' => $txt['editBuddyIgnoreLists'],
-			'href' => $scripturl . '?action=profile;area=lists;sa=ignore',
-			'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
-			'is_last' => true,
-		),
+	$areas['profile']['sub_buttons']['notification'] = array(
+		'title' => $txt['notification'],
+		'href' => $scripturl . '?action=profile;area=notification',
+		'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
+	);
+	$areas['profile']['sub_buttons']['ignore'] = array(
+		'title' => $txt['editBuddyIgnoreLists'],
+		'href' => $scripturl . '?action=profile;area=lists;sa=ignore',
+		'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
+		'is_last' => true,
 	);
 
 	// Restore the language strings:

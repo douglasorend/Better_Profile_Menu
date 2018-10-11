@@ -1,5 +1,5 @@
 [hr]
-[center][color=red][size=16pt][b]BETTER PROFILE MENU v1.10[/b][/size][/color]
+[center][color=red][size=16pt][b]BETTER PROFILE MENU v1.11[/b][/size][/color]
 [url=http://www.simplemachines.org/community/index.php?action=profile;u=253913][b]By Dougiefresh[/b][/url] -> [url=http://custom.simplemachines.org/mods/index.php?mod=3904]Link to Mod[/url]
 [/center]
 [hr]
@@ -8,7 +8,7 @@
 This mod alters the main menu's Profile menu to add more functionality to the menu itself, similar to what SMF 2.1 release 2.1 did.
 
 [color=blue][b][size=12pt][u]Compatibility Notes[/u][/size][/b][/color]
-This mod was tested on SMF 2.0.9, but should work on any version of SMF 2.0.x.  SMF 1.x and SMF 2.1 is not and will not be supported.
+This mod was tested on SMF 2.0.12, but should work on any version of SMF 2.0.x.  SMF 1.x and SMF 2.1 is not and will not be supported.
 
 The [url=http://custom.simplemachines.org/mods/index.php?mod=1264]Drafts[/url], [url=http://custom.simplemachines.org/mods/index.php?mod=864]Bookmarks[/url] and [url=http://custom.simplemachines.org/mods/index.php?mod=1675]Ultimate Profile[/url] mod are supported if the appropriate source file is found.
 

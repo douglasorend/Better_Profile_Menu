@@ -1,4 +1,7 @@
-v1.10 - June 12, 2015
+v1.11 - October 19th, 2016
+o Added support for my new "Threads Participated In" mod.
+
+v1.10 - June 12th, 2015
 o Fixed [b]Sources/Load.php[/b] to properly deal with language reloading.
 
 v1.9 - March 5th, 2015:
