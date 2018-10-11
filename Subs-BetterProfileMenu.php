@@ -25,38 +25,19 @@ function BetterProfile_Menu_Buttons(&$areas)
 	loadLanguage('Profile');
 	
 	// Redefine the Profiles menu:
-	$areas['profile'] = array(
-		'title' => $txt['profile'],
-		'href' => $scripturl . '?action=profile',
-		'show' => $context['allow_edit_profile'],
-		'sub_buttons' => array(
-			'summary' => array(
-				'title' => $txt['summary'],
-				'href' => $scripturl . '?action=profile',
-				'show' => true,
-			),
-			'account' => array(
-				'title' => $txt['account'],
-				'href' => $scripturl . '?action=profile;area=account',
-				'show' => allowedTo(array('profile_identity_any', 'profile_identity_own', 'manage_membergroups')),
-			),
-			'profile' => array(
-				'title' => $txt['forumprofile'],
-				'href' => $scripturl . '?action=profile;area=forumprofile',
-				'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
-			),
-			'theme' => array(
-				'title' => $txt['theme'],
-				'href' => $scripturl . '?action=profile;area=theme',
-				'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
-			),
-			'posts' => array(
-				'title' => $txt['showPosts'],
-				'href' => $scripturl . '?action=profile;area=showposts',
-				'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
-			),
-		),
+	$areas['profile']['sub_buttons']['theme'] = array(
+		'title' => $txt['theme'],
+		'href' => $scripturl . '?action=profile;area=theme',
+		'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
 	);
+	if (empty($areas['profiles']['sub_buttons']['myposts']))
+	{
+		$areas['profile']['sub_buttons']['posts'] = array(
+			'title' => $txt['showPosts'],
+			'href' => $scripturl . '?action=profile;area=showposts',
+			'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
+		);
+	}
 	if (file_exists($sourcedir . '/Bookmarks.php'))
 	{
 		// [Bookmarks] button
@@ -76,7 +57,6 @@ function BetterProfile_Menu_Buttons(&$areas)
 			'show' => allowedTo(array('edit_ultimate_profile_own', 'edit_ultimate_profile_any')),
 		);
 	}
-		
 	$areas['profile']['sub_buttons'] += array(
 		'notification' => array(
 			'title' => $txt['notification'],
