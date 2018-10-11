@@ -14,7 +14,7 @@ if (!defined('SMF'))
 **********************************************************************************/
 function BetterProfile_Menu_Buttons(&$areas)
 {
-	global $txt, $scripturl, $context;
+	global $txt, $scripturl, $context, $sourcedir;
 	
 	// DO NOT RUN if $_GET['xml'] is defined!
 	if (isset($_GET['xml']))
@@ -45,27 +45,38 @@ function BetterProfile_Menu_Buttons(&$areas)
 				'href' => $scripturl . '?action=profile;area=forumprofile',
 				'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
 			),
-			'posts' => array(
-				'title' => $txt['showPosts'],
-				'href' => $scripturl . '?action=profile;area=showposts',
-				'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
-			),
-			'notification' => array(
-				'title' => $txt['notification'],
-				'href' => $scripturl . '?action=profile;area=notification',
-				'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
-			),
-			'ignore' => array(
-				'title' => $txt['editBuddyIgnoreLists'],
-				'href' => $scripturl . '?action=profile;area=lists;sa=ignore',
-				'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
-				'is_last' => true,
-			),
-			'theme' => array(
-				'title' => $txt['theme'],
-				'href' => $scripturl . '?action=profile;area=theme',
-				'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
-			),
+		),
+	);
+	if (file_exists($sourcedir . '/Buddies.php'))
+	{
+		loadLanguage('UltimateProfile');
+		$areas['profile']['sub_buttons']['ultimate'] = array(
+			'title' => $txt['profile_customized'],
+			'href' => $scripturl . '?action=profile;area=customized',
+			'show' => true,
+		);
+	}
+	$areas['profile']['sub_buttons'] += array(		
+		'posts' => array(
+			'title' => $txt['showPosts'],
+			'href' => $scripturl . '?action=profile;area=showposts',
+			'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
+		),
+		'notification' => array(
+			'title' => $txt['notification'],
+			'href' => $scripturl . '?action=profile;area=notification',
+			'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
+		),
+		'ignore' => array(
+			'title' => $txt['editBuddyIgnoreLists'],
+			'href' => $scripturl . '?action=profile;area=lists;sa=ignore',
+			'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
+			'is_last' => true,
+		),
+		'theme' => array(
+			'title' => $txt['theme'],
+			'href' => $scripturl . '?action=profile;area=theme',
+			'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
 		),
 	);
 	
