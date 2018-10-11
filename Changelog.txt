@@ -1,3 +1,7 @@
+v2.1 - November 3rd, 2016
+o Rewrote mod to better capture all profile items available to the user.
+o Added hook to clear cached profile menu when Core Settings change.
+
 v2.0 - November 2nd, 2016
 o Rewritten to use only hooks in order to gather the required information.
 

@@ -1,21 +1,21 @@
 [hr]
-[center][color=red][size=16pt][b]BETTER PROFILE MENU v2.0[/b][/size][/color]
+[center][color=red][size=16pt][b]BETTER PROFILE MENU v2.1[/b][/size][/color]
 [url=http://www.simplemachines.org/community/index.php?action=profile;u=253913][b]By Dougiefresh[/b][/url] -> [url=http://custom.simplemachines.org/mods/index.php?mod=3904]Link to Mod[/url]
 [/center]
 [hr]
 
 [color=blue][b][size=12pt][u]Introduction[/u][/size][/b][/color]
-This mod alters the main menu's Profile menu to add more functionality to the menu itself, similar to what SMF 2.1 release 2.1 did.
+This mod alters the main menu's Profile menu to bring all the functionality of the profile area to the main forum's menu bar.
+
+This mod was inspired by tip provided by [url=http://www.simplemachines.org/community/index.php?action=profile;u=152526]snow[/url] in [url=http://www.simplemachines.org/community/index.php?topic=400767.msg2785613#msg2785613]Lazy Admin Menu[/url] in order to make it easier for the admin to navigate straight to where they want to go.
+
+The only difference is that this mod built dynamically, so that any changes to the profile menu are shown immediately.
 
 [color=blue][b][size=12pt][u]Compatibility Notes[/u][/size][/b][/color]
 This mod was tested on SMF 2.0.12, but should work on any version of SMF 2.0.x.  SMF 1.x and SMF 2.1 is not and will not be supported.
 
-The [url=http://custom.simplemachines.org/mods/index.php?mod=1264]Drafts[/url], [url=http://custom.simplemachines.org/mods/index.php?mod=864]Bookmarks[/url] and [url=http://custom.simplemachines.org/mods/index.php?mod=1675]Ultimate Profile[/url] mod are supported if the appropriate source file is found.
-
 [color=blue][b][size=12pt][u]Changelog[/u][/size][/b][/color]
 The changelog has been removed and can be seen at [url=http://www.xptsp.com/board/index.php?topic=6.msg130#msg130]XPtsp.com[/url].
-
-If you are running [url=http://custom.simplemachines.org/mods/index.php?mod=3901]Lazy Admin Menu[/url], that mod employs the same operations for [b]Sources/Load.php[/b] that this mod does, so it is okay to skip these operations.
 
 [color=blue][b][size=12pt][u]License[/u][/size][/b][/color]
 Copyright (c) 2016, Douglas Orend

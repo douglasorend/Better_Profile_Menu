@@ -22,6 +22,8 @@ if (SMF == 'SSI')
 $hook_functions = array(
 	'integrate_pre_include' => '$sourcedir/Subs-BetterProfileMenu.php',
 	'integrate_load_theme' => 'BetterProfile_Load_Theme',
+	'integrate_core_features' => 'BetterProfile_CoreFeatures',
+	'integrate_verify_user' => 'BetterProfile_Verify_User',
 );
 
 // Adding or removing them?
