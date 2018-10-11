@@ -57,15 +57,14 @@ function BetterProfile_Menu_Buttons(&$areas)
 			),
 		),
 	);
-	if (isset($txt['bookmarks']))
+	if (file_exists($sourcedir . '/Bookmarks.php'))
 	{
+		// [Bookmarks] button
+		unset($areas['bookmarks']);
 		$areas['profile']['sub_buttons']['bookmarks'] = array(
-			// [Bookmarks] button
-			'bookmarks' => array(
-				'title' => $txt['bookmarks'],
-				 'href' => $scripturl . '?action=bookmarks',
-				 'show' => allowedTo('make_bookmarks'),
-			),
+			'title' => $txt['bookmarks'],
+			'href' => $scripturl . '?action=bookmarks',
+			'show' => allowedTo('make_bookmarks'),
 		);
 	}
 	if (file_exists($sourcedir . '/Buddies.php'))
@@ -91,7 +90,7 @@ function BetterProfile_Menu_Buttons(&$areas)
 			'is_last' => true,
 		),
 	);
-	
+
 	// Restore the language strings:
 	$txt = $old_txt;
 }

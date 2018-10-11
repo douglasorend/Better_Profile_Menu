@@ -1,5 +1,5 @@
 [hr]
-[center][color=red][size=16pt][b]BETTER PROFILE MENU v1.4[/b][/size][/color]
+[center][color=red][size=16pt][b]BETTER PROFILE MENU v1.5[/b][/size][/color]
 [url=http://www.simplemachines.org/community/index.php?action=profile;u=253913][b]By Dougiefresh[/b][/url] -> [url=http://custom.simplemachines.org/mods/index.php?mod=3904]Link to Mod[/url]
 [/center]
 [hr]
@@ -12,6 +12,10 @@ This mod was tested on SMF 2.0.8, but should work on earlier versions of SMF 2.0
 
 [color=blue][b][size=12pt][u]Changelog[/u][/size][/b][/color]
 [quote]
+[b][u]v1.5 - October 17th, 2014[/u][/b]
+o Fixed stupid array mistake in [b]Subs-BetterProfileMenu.php[/b] code....
+o Removes [b]Bookmarks[/b] tab from main menu and places it in the Profile menu....
+
 [b][u]v1.4 - October 15th, 2014[/u][/b]
 o Added support for the [url=http://custom.simplemachines.org/mods/index.php?mod=864]Bookmarks[/url] mod.
 o Minor Profiles menu changes made, originally done by [url=http://www.simplemachines.org/community/index.php?action=profile;u=394309]Ninja ZX-10RR[/url]
