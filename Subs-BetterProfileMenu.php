@@ -21,6 +21,7 @@ function BetterProfile_Menu_Buttons(&$areas)
 		return;
 		
 	// Load the Profile language, preserving the "time_format" string:
+	$loaded = LoadLanguage('', '', false, false, true);
 	$old_txt = $txt;
 	loadLanguage('Profile');
 	
@@ -114,6 +115,7 @@ function BetterProfile_Menu_Buttons(&$areas)
 
 	// Restore the language strings:
 	$txt = $old_txt;
+	LoadLanguage('', '', false, false, $loaded);
 }
 
 ?>

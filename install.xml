@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+<modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
+<id>dougiefresh:BetterProfileMenu</id>
+<name>Better Profile Menu</name>
+<version>1.10</version>
+
+<file name="$sourcedir/Load.php">
+	<operation>
+		<search position="replace"><![CDATA[function loadLanguage($template_name, $lang = '', $fatal = true, $force_reload = false)]]></search>
+		<add><![CDATA[function loadLanguage($template_name, $lang = '', $fatal = true, $force_reload = false, $get_already_loaded = false)]]></add>
+	</operation>
+	<operation>
+		<search position="after"><![CDATA[// Default to the user's language.]]></search>
+		<add><![CDATA[/* BEGIN MOD Lazy Admin Area Mod */
+	if (is_array($get_already_loaded))
+	{
+		$already_loaded = $get_already_loaded;
+		return;
+	}
+	elseif ($get_already_loaded == true)
+		return $already_loaded;
+	/* END MOD Lazy Admin Area Mod */
+	
+	]]></add>
+	</operation>
+</file>
+</modification>

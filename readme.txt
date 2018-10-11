@@ -1,5 +1,5 @@
 [hr]
-[center][color=red][size=16pt][b]BETTER PROFILE MENU v1.9[/b][/size][/color]
+[center][color=red][size=16pt][b]BETTER PROFILE MENU v1.10[/b][/size][/color]
 [url=http://www.simplemachines.org/community/index.php?action=profile;u=253913][b]By Dougiefresh[/b][/url] -> [url=http://custom.simplemachines.org/mods/index.php?mod=3904]Link to Mod[/url]
 [/center]
 [hr]
@@ -14,6 +14,8 @@ The [url=http://custom.simplemachines.org/mods/index.php?mod=1264]Drafts[/url], 
 
 [color=blue][b][size=12pt][u]Changelog[/u][/size][/b][/color]
 The changelog has been removed and can be seen at [url=http://www.xptsp.com/board/index.php?topic=6.msg130#msg130]XPtsp.com[/url].
+
+If you are running [url=http://custom.simplemachines.org/mods/index.php?mod=3901]Lazy Admin Menu[/url], that mod employs the same operations for [b]Sources/Load.php[/b] that this mod does, so it is okay to skip these operations.
 
 [color=blue][b][size=12pt][u]License[/u][/size][/b][/color]
 Copyright (c) 2015, Douglas Orend
