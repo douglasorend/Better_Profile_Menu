@@ -1,3 +1,7 @@
+v2.5 - February 17th, 2018
+o Now uses [b]safe_serialize[/b]/[b]safe_unserialize[/b] functions when available.
+o Added dropdown box in [b]Profile[/b] => [b]Look and Layout[/b] to control mod per user.
+
 v2.4 - November 12th, 2016
 o Fixed issue where menu wasn't changed because no caching of menu could be done.
 o Added code to stop bans from Forum Hard Hit mod while using this mod.

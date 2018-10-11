@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+<modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
+<id>dougiefresh:BetterMessagesMenu</id>
+<name>Better Messages Menu</name>
+<version>1.4</version>
+
+<file name="$languagedir/Profile.english.php">
+	<operation>
+		<search position="end" />
+		<add><![CDATA[
+$txt['bpm_mode'] = 'Better Profiles Menu setting:';
+$txt['bpm_disabled'] = 'Completely Disabled';
+$txt['bpm_enabled'] = 'Enabled';
+$txt['bpm_enabled_no_click'] = 'Enabled with No Click';
+]]></add>
+	</operation>
+</file>
+</modification>

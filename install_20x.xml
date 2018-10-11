@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+<modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
+<id>dougiefresh:BetterProfileMenu</id>
+<name>Better Profile Menu</name>
+<version>2.5</version>
+
+<file name="$sourcedir/Load.php">
+	<!-- loadUserSettings function -->
+	<operation>
+		<search position="before"><![CDATA['permissions' => array(),]]></search>
+		<add><![CDATA[
+		'bpm_mode' => isset($user_settings['bpm_mode']) ? $user_settings['bpm_mode'] : 0,]]></add>
+	</operation>
+</file>
+<file name="$sourcedir/Profile-Modify.php">
+	<operation>
+		<search position="after"><![CDATA[
+
+	$disabled_fields = !empty($modSettings['disabled_profile_fields'])]]></search>
+		<add><![CDATA[
+	BetterProfile_Profile($profile_fields);]]></add>
+	</operation>
+	<operation>
+		<search position="after"><![CDATA[			'theme_settings',]]></search>
+		<add><![CDATA[			'bpm_mode', 'hr',
+]]></add>
+	</operation>
+	<operation>
+		<search position="before"><![CDATA[		'ignore_boards',]]></search>
+		<add><![CDATA[
+		'bpm_mode',]]></add>
+	</operation>
+</file>
+</modification>

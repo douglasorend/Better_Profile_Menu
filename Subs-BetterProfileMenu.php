@@ -80,7 +80,8 @@ function BetterProfile_Profile_Hook(&$profile_areas)
 	}
 
 	// Cache the menu we just built for the calling user:
-	echo serialize($cached);
+	$func = function_exists('safe_unserialize') ? 'safe_serialize' : 'serialize';
+	echo $func($cached);
 	exit;
 }
 
@@ -92,8 +93,8 @@ function BetterProfile_Menu_Buttons(&$areas)
 	if (isset($_GET['action']) && $_GET['action'] == 'profile' && isset($_GET['area']) && $_GET['area'] == 'betterprofile_ucp')
 		return;
 
-	// Are you a guest, or can't see the Profile menu for some reason?  Then why bother with it....
-	if (empty($user_info['id']) || empty($areas['profile']['show']))
+	// Are you a guest, can't view profile, or mod turned off?  Then why bother?
+	if (empty($user_info['id']) || empty($areas['profile']['show']) || empty($user_info['bpm_mode']))
 		return;
 
 	// Attempt to get the cached Profile menu:
@@ -102,11 +103,16 @@ function BetterProfile_Menu_Buttons(&$areas)
 	{
 		// Force the profile code to build our new Profile menu:
 		$contents = @file_get_contents($scripturl . '?action=profile;area=betterprofile_ucp;u=' . $user_info['id']);
-		$cached = unserialize($contents);
+		$func = function_exists('safe_unserialize') ? 'safe_unserialize' : 'unserialize';
+		$cached = @$func($contents);
 		cache_put_data('betterprofile_' . $user_info['id'], $cached, 86400);
 	}
 	if (is_array($cached))
+	{
+		if ($user_info['bpm_mode'] == 2)
+			$Profile['href'] = '#" onclick="return false;';
 		$Profile['sub_buttons'] = $cached;
+	}
 
 	// Define the rest of the Profile menu:
 	if (isset($areas['bookmarks']))
@@ -125,6 +131,19 @@ function BetterProfile_CoreFeatures(&$core_features)
 	global $cachedir;
 	if (isset($_POST['save']))
 		array_map('unlink', glob($cachedir . '/data_*-SMF-betterprofile_*'));
+}
+
+function BetterProfile_Profile(&$profile_fields)
+{
+	global $txt, $user_info;
+
+	$profile_fields['bpm_mode'] = array(
+		'type' => 'select',
+		'label' => $txt['bpm_mode'],
+		'options' => 'global $txt; return array(0 => $txt["bpm_disabled"], 1 => $txt["bpm_enabled"], 2 => $txt["bpm_enabled_no_click"]);',
+		'permission' => 'profile_extra',
+		'value' => $user_info['bpm_mode'],
+	);
 }
 
 ?>

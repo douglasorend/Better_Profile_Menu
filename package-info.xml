@@ -3,17 +3,29 @@
 <package-info xmlns="http://www.simplemachines.org/xml/package-info" xmlns:smf="http://www.simplemachines.org/">
 	<id>dougiefresh:BetterProfileMenu</id>
 	<name>Better Profile Menu</name>
-	<version>2.4</version>
 	<type>modification</type>
+	<version>2.5</version>
 
-	<install for="2.0 - 2.0.99">
+	<install for="2.0 - 2.0.11">
 		<readme type="file" parsebbc="true">readme.txt</readme>
+		<database>db_install.php</database>
 		<code>add_remove_hooks.php</code>
+		<modification>install_20x.xml</modification>
+		<modification>language_english.xml</modification>
+		<require-file name="Subs-BetterProfileMenu.php" destination="$sourcedir" />
+	</install>
+	<install for="2.0.12 - 2.0.99">
+		<readme type="file" parsebbc="true">readme.txt</readme>
+		<database>db_install.php</database>
+		<code>add_remove_hooks.php</code>
+		<modification>install_20x.xml</modification>
 		<modification>install_2012.xml</modification>
+		<modification>language_english.xml</modification>
 		<require-file name="Subs-BetterProfileMenu.php" destination="$sourcedir" />
 	</install>
 	<uninstall for="2.0 - 2.0.99">
 		<code>add_remove_hooks.php</code>
+		<modification reverse="true">language_english.xml</modification>
 		<remove-file name="$sourcedir/Subs-BetterProfileMenu.php" />
 	</uninstall>
 </package-info>

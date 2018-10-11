@@ -1,5 +1,5 @@
 [hr]
-[center][color=red][size=16pt][b]BETTER PROFILE MENU v2.4[/b][/size][/color]
+[center][color=red][size=16pt][b]BETTER PROFILE MENU v2.5[/b][/size][/color]
 [url=http://www.simplemachines.org/community/index.php?action=profile;u=253913][b]By Dougiefresh[/b][/url] -> [url=http://custom.simplemachines.org/mods/index.php?mod=3904]Link to Mod[/url]
 [/center]
 [hr]
@@ -13,6 +13,15 @@ The only difference is that this mod built dynamically, so that any changes to t
 
 [color=blue][b][size=12pt][u]Security Issue Notice[/u][/size][/b][/color]
 If you are running either [b]VERSION 2.0[/b] or [b]VERSION 2.1[/b], you are [b]STRONGLY URGED[/b] to stop using the mod immediately and upgrade to the latest version, which addresses a [b]MAJOR SECURITY ISSUE[/b] that has been resolved.  All version 1.x and version 2.2+ mods are not affected by this security issue!
+
+[color=blue][b][size=12pt][u]User Settings[/u][/size][/b][/color]
+Under [b]Profile[/b] => [b]Modify Profile[/b] => [b]Look and Layout[/b], there is a new option:
+o [b]Better Profiles Menu setting[/b]
+
+Each user can set it to one of the following:
+o [b]Completely Disabled[/b] => Exactly like this mod isn't installed :p
+o [b]Enabled[/b] => Exactly like this mod before version 2.4.
+o [b]Enabled with NoClick[/b] => Like Enabled, but clicking profile menu item only opens dropdown.
 
 [color=blue][b][size=12pt][u]Compatibility Notes[/u][/size][/b][/color]
 This mod was tested on SMF 2.0.12, but should work on any version of SMF 2.0.x.  SMF 1.x and SMF 2.1 is not and will not be supported.
