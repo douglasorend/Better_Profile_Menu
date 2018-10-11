@@ -57,6 +57,15 @@ function BetterProfile_Menu_Buttons(&$areas)
 			'show' => allowedTo(array('edit_ultimate_profile_own', 'edit_ultimate_profile_any')),
 		);
 	}
+	if (file_exists($sourcedir . '/Drafts.php'))
+	{
+		loadLanguage('Drafts');
+		$areas['profile']['sub_buttons']['ultimate'] = array(
+			'title' => $txt['permissiongroup_drafts'],
+			'href' => $scripturl . '?action=profile;area=show_drafts',
+			'show' => allowedTo(array('profile_view_own', 'profile_view_any')),
+		);
+	}
 	$areas['profile']['sub_buttons'] += array(
 		'notification' => array(
 			'title' => $txt['notification'],
