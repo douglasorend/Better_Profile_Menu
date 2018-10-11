@@ -14,8 +14,8 @@ if (!defined('SMF'))
 **********************************************************************************/
 function BetterProfile_Verify_User()
 {
-	// Skip this if we are not requesting the layout of the profile CPL:
-	return array( (isset($_GET['action'], $_GET['area'], $_GET['u']) && $_GET['action'] == 'profile' && $_GET['area'] == 'betterprofile_ucp') ? (int) $_GET['u'] : 0);
+	if (isset($_GET['action']) && $_GET['action'] == 'profile' && isset($_GET['area']) && $_GET['area'] == 'betterprofile_ucp')
+		return isset($_GET['u']) ? (int) $_GET['u'] : 0;
 }
 
 function BetterProfile_Load_Theme()
@@ -30,10 +30,10 @@ function BetterProfile_Profile_Hook(&$profile_areas)
 	global $user_info, $scripturl, $txt;
 
 	// Skip this if we are not requesting the layout of the moderator CPL:
-	if (!isset($_GET['area']) || !isset($_GET['u']) || $_GET['area'] != 'betterprofile_ucp')
+	if (empty($user_info['id']) || !isset($_GET['area']) || !isset($_GET['u']) || $_GET['area'] != 'betterprofile_ucp')
 		return;
 
-	// Rebuild the profile menu:
+	// Rebuild the Profile menu:
 	$cached = array();
 	foreach ($profile_areas as $id1 => $area1)
 	{
@@ -53,9 +53,10 @@ function BetterProfile_Profile_Hook(&$profile_areas)
 			if (empty($area2['label']))
 				continue;
 			if (!$first)
-				$first = $cached[$id1]['href'] = $scripturl . '?action=profile;area=' . $id2;
+				$first = $cached[$id1]['href'] = $scripturl . '?action=Profile;area=' . $id2;
 
-			$link = isset($area2['custom_url']) ? $area2['custom_url'] : $scripturl . '?action=profile;area=' . $id2;
+			// Add the entry into the custom menu we're building:
+			$link = isset($area2['custom_url']) ? $area2['custom_url'] : $scripturl . '?action=Profile;area=' . $id2;
 			$show = (!isset($area2['enabled']) || $area2['enabled']) && !empty($area2['permission']['own']) && allowedTo($area2['permission']['own']);
 			$cached[$id1]['sub_buttons'][$last = $id2] = array(
 				'title' => $area2['label'],
@@ -63,6 +64,7 @@ function BetterProfile_Profile_Hook(&$profile_areas)
 				'show' => $show,
 			);
 
+			// Let's add the "Show Posts" area to the menu under "Show Topics":
 			if ($id2 == 'showposts')
 				$cached[$id1]['sub_buttons'][$last = 'showtopics'] = array(
 					'title' => $area2['label'] . ': ' . $txt['topics'],
@@ -73,6 +75,7 @@ function BetterProfile_Profile_Hook(&$profile_areas)
 		$cached[$id1]['sub_buttons'][$last]['is_last'] = true;
 	}
 
+	// Cache the menu we just built for the calling user:
 	cache_put_data('betterprofile_' . $user_info['id'], $cached, 86400);
 	exit;
 }
@@ -82,24 +85,23 @@ function BetterProfile_Menu_Buttons(&$areas)
 	global $txt, $scripturl, $user_info, $sourcedir;
 
 	// Gotta prevent an infinite loop here:
-	if (isset($_GET['action'], $_GET['area']) && $_GET['action'] == 'profile' && $_GET['area'] == 'betterprofile_ucp')
+	if (isset($_GET['action']) && $_GET['action'] == 'profile' && isset($_GET['area']) && $_GET['area'] == 'betterprofile_ucp')
 		return;
 
-	// Can't see the moderation menu?  Then why bother with it?
-	if (empty($areas['profile']['show']))
+	// Are you a guest, or can't see the Profile menu for some reason?  Then why bother with it....
+	if (empty($user_info['id']) || empty($areas['profile']['show']))
 		return;
 
-	// Attempt to get the cached moderator menu:
-	$profile = &$areas['profile'];
-	$profile['old_buttons'] = $profile['sub_buttons'];
+	// Attempt to get the cached Profile menu:
+	$Profile = &$areas['profile'];
 	if (($cached = cache_get_data('betterprofile_' . $user_info['id'], 86400)) == null)
 	{
-		// Force the moderation code to build our new moderation menu:
-		@file_get_contents($scripturl . '?action=profile;area=betterprofile_ucp;u=' . $user_info['id']);
+		// Force the profile code to build our new Profile menu:
+		@file_get_contents($scripturl . '?action=Profile;area=betterprofile_ucp;u=' . $user_info['id']);
 		$cached = cache_get_data('betterprofile_' . $user_info['id'], 86400);
 	}
 	if (is_array($cached))
-		$profile['sub_buttons'] = $cached;
+		$Profile['sub_buttons'] = $cached;
 
 	// Define the rest of the Profile menu:
 	if (file_exists($sourcedir . '/Bookmarks.php'))

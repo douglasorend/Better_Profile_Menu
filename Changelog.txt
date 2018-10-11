@@ -1,3 +1,6 @@
+v2.2 - November 7th, 2016
+o Fixed bug report that damaged proper user verification functionality.
+
 v2.1 - November 3rd, 2016
 o Rewrote mod to better capture all profile items available to the user.
 o Added hook to clear cached profile menu when Core Settings change.

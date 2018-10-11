@@ -1,5 +1,5 @@
 [hr]
-[center][color=red][size=16pt][b]BETTER PROFILE MENU v2.1[/b][/size][/color]
+[center][color=red][size=16pt][b]BETTER PROFILE MENU v2.2[/b][/size][/color]
 [url=http://www.simplemachines.org/community/index.php?action=profile;u=253913][b]By Dougiefresh[/b][/url] -> [url=http://custom.simplemachines.org/mods/index.php?mod=3904]Link to Mod[/url]
 [/center]
 [hr]
@@ -10,6 +10,9 @@ This mod alters the main menu's Profile menu to bring all the functionality of t
 This mod was inspired by tip provided by [url=http://www.simplemachines.org/community/index.php?action=profile;u=152526]snow[/url] in [url=http://www.simplemachines.org/community/index.php?topic=400767.msg2785613#msg2785613]Lazy Admin Menu[/url] in order to make it easier for the admin to navigate straight to where they want to go.
 
 The only difference is that this mod built dynamically, so that any changes to the profile menu are shown immediately.
+
+[color=blue][b][size=12pt][u]Security Issue Notice[/u][/size][/b][/color]
+If you are running either [b]VERSION 2.0[/b] or [b]VERSION 2.1[/b], you are [b]STRONGLY URGED[/b] to stop using the mod immediately and upgrade to the latest version, which addresses a [b]MAJOR SECURITY ISSUE[/b] that has been resolved.  All version 1.x and version 2.2+ mods are not affected by this security issue!
 
 [color=blue][b][size=12pt][u]Compatibility Notes[/u][/size][/b][/color]
 This mod was tested on SMF 2.0.12, but should work on any version of SMF 2.0.x.  SMF 1.x and SMF 2.1 is not and will not be supported.
