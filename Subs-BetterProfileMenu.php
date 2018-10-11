@@ -53,11 +53,11 @@ function BetterProfile_Profile_Hook(&$profile_areas)
 			if (empty($area2['label']))
 				continue;
 			if (!$first)
-				$first = $cached[$id1]['href'] = $scripturl . '?action=Profile;area=' . $id2;
+				$first = $cached[$id1]['href'] = $scripturl . '?action=profile;area=' . $id2;
 
 			// Add the entry into the custom menu we're building:
-			$link = isset($area2['custom_url']) ? $area2['custom_url'] : $scripturl . '?action=Profile;area=' . $id2;
-			$show = (!isset($area2['enabled']) || $area2['enabled']) && !empty($area2['permission']['own']) && allowedTo($area2['permission']['own']);
+			$link = isset($area2['custom_url']) ? $area2['custom_url'] : $scripturl . '?action=profile;area=' . $id2;
+			$show = (!isset($area2['enabled']) || $area2['enabled']) && (empty($area2['permission']['own']) || (!empty($area2['permission']['own']) && allowedTo($area2['permission']['own'])));
 			$cached[$id1]['sub_buttons'][$last = $id2] = array(
 				'title' => $area2['label'],
 				'href' => $link,
@@ -97,7 +97,7 @@ function BetterProfile_Menu_Buttons(&$areas)
 	if (($cached = cache_get_data('betterprofile_' . $user_info['id'], 86400)) == null)
 	{
 		// Force the profile code to build our new Profile menu:
-		@file_get_contents($scripturl . '?action=Profile;area=betterprofile_ucp;u=' . $user_info['id']);
+		@file_get_contents($scripturl . '?action=profile;area=betterprofile_ucp;u=' . $user_info['id']);
 		$cached = cache_get_data('betterprofile_' . $user_info['id'], 86400);
 	}
 	if (is_array($cached))

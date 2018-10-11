@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+<modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
+<id>dougiefresh:BetterProfileMenu</id>
+<name>Better Profile Menu</name>
+<version>2.3</version>
+
+<file name="$sourcedir/Subs.php">
+	<operation error="ignore">
+		<search position="replace"><![CDATA[{
+	// Input exceeds 4096.
+	if(strlen($str) > 4096)
+		return false;
+]]></search>
+		<add><![CDATA[{
+/*
+	// Input exceeds 4096.
+	if(strlen($str) > 4096)
+		return false;
+*/
+]]></add>
+	</operation>
+</file>
+</modification>

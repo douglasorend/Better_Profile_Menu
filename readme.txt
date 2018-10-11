@@ -1,5 +1,5 @@
 [hr]
-[center][color=red][size=16pt][b]BETTER PROFILE MENU v2.2[/b][/size][/color]
+[center][color=red][size=16pt][b]BETTER PROFILE MENU v2.3[/b][/size][/color]
 [url=http://www.simplemachines.org/community/index.php?action=profile;u=253913][b]By Dougiefresh[/b][/url] -> [url=http://custom.simplemachines.org/mods/index.php?mod=3904]Link to Mod[/url]
 [/center]
 [hr]
@@ -16,6 +16,8 @@ If you are running either [b]VERSION 2.0[/b] or [b]VERSION 2.1[/b], you are [b]S
 
 [color=blue][b][size=12pt][u]Compatibility Notes[/u][/size][/b][/color]
 This mod was tested on SMF 2.0.12, but should work on any version of SMF 2.0.x.  SMF 1.x and SMF 2.1 is not and will not be supported.
+
+Evidentally, there was an error in the [b]SMF 2.0.11 to 2.0.12[/b] that prevents the forum from properly caching serialized stuff longer than 4096 bytes long.  This update fixes this problem, if it is present in your forum.
 
 [color=blue][b][size=12pt][u]Changelog[/u][/size][/b][/color]
 The changelog has been removed and can be seen at [url=http://www.xptsp.com/board/index.php?topic=6.msg130#msg130]XPtsp.com[/url].

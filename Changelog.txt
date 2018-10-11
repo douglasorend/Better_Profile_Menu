@@ -1,3 +1,6 @@
+v2.3 - November 8th, 2016
+o Fixed SMF update bug that prevents unserializing strings longer than 4096 bytes.
+
 v2.2 - November 7th, 2016
 o Fixed bug report that damaged proper user verification functionality.
 
