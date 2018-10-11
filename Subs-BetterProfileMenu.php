@@ -12,76 +12,97 @@ if (!defined('SMF'))
 /**********************************************************************************
 * Better Profile Menu hook
 **********************************************************************************/
+function BetterProfile_Load_Theme()
+{
+	// This admin hook must be last hook executed!
+	if (isset($_GET['action'], $_GET['area']) && $_GET['action'] == 'profile' && $_GET['area'] == 'betterprofile_ucp')
+		add_integration_function('integrate_profile_areas', 'BetterProfile_Profile_Hook', false);
+	else
+		add_integration_function('integrate_menu_buttons', 'BetterProfile_Menu_Buttons', false);
+}
+
+function BetterProfile_Profile_Hook(&$areas)
+{
+	echo var_export($areas);
+	exit;
+}
+
 function BetterProfile_Menu_Buttons(&$areas)
 {
-	global $txt, $scripturl, $context, $sourcedir, $boarddir;
+	global $txt, $scripturl, $context, $sourcedir, $boarddir, $user_info;
 
-	// DO NOT RUN if $_GET['xml'] is defined!
-	if (isset($_GET['xml']))
-		return;
-
-	// Load the Profile language, preserving the "time_format" string:
-	$loaded = LoadLanguage('', '', false, false, true);
-	$old_txt = $txt;
-	loadLanguage('Profile');
-
-	// Remove the is_last item
-	foreach ($areas['profile']['sub_buttons'] as $key => $value)
+	// Retrieve the admin area menu, either from cache or the Admin.php script...
+	$profile = &$areas['profile'];
+	if (($cached = cache_get_data('betterprofile_' . $user_info['id'], 86400)) == null)
 	{
-		if (!empty($value['is_last']))
-			unset($areas['profile']['sub_buttons'][$key]['is_last']);
-	}
-
-	// Add the "Theme" link to the Profile menu:
-	$areas['profile']['sub_buttons']['theme'] = array(
-		'title' => $txt['theme'],
-		'href' => $scripturl . '?action=profile;area=theme',
-		'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
-	);
-
-	// If "myposts" element isn't defined, define it, then add the "Show Topics" link underneath it:
-	if (empty($areas['profiles']['sub_buttons']['myposts']))
-	{
-		$areas['profile']['sub_buttons']['myposts'] = array(
-			'title' => $txt['showPosts'],
-			'href' => $scripturl . '?action=profile;area=showposts',
-			'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
-		);
-		$areas['profile']['sub_buttons']['mytopics'] = array(
-			'title' => $txt['showTopics'],
-			'href' => $scripturl . '?action=profile;area=showposts;sa=topics',
-			'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
-		);
-		if (file_exists($boarddir . '/Themes/default/Profile-Participation.template.php'))
-			$areas['profile']['sub_buttons']['mythreads'] = array(
-				'title' => $txt['showThreads'],
-				'href' => $scripturl . '?action=profile;area=showposts;sa=thrads',
-				'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
-			);
-	}
-	else
-	{
-		$new = array();
-		foreach ($areas['profile']['sub_buttons'] as $id => $area)
+		// Get the current admin menu.  Failure to do so means aborting the menu!
+		$contents = @file_get_contents($scripturl . '?action=profile;area=betterprofile_ucp;u=' . $user_info['id']);
+		if (substr($contents, 0, 7) != 'array (')
 		{
-			$new[$id] = $area;
-			if ($id == 'myposts')
-			{
-				$new['mytopics'] = array(
-					'title' => $txt['showTopics'],
-					'href' => $scripturl . '?action=profile;area=showposts;sa=topics',
-					'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
-				);
-				if (file_exists($boarddir . '/Themes/default/Profile-Participation.template.php'))
-					$new['mythreads'] = array(
-						'title' => $txt['showThreads'],
-						'href' => $scripturl . '?action=profile;area=showposts;sa=thrads',
-						'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
-				);
-			}
+			if (!empty($modSettings['cache_enable']))
+				cache_put_data('betterprofile_' . $user_info['id'], 1, 86400);
+			return;
 		}
-		$areas['profile']['sub_buttons'] = $new;
+		$convert_to_array = create_function('', 'return ' . $contents . ';');
+		$profile_areas = $convert_to_array();
+		if (!is_array($profile_areas))
+		{
+			if (!empty($modSettings['cache_enable']))
+				cache_put_data('betterprofile_' . $user_info['id'], 1, 86400);
+			return;
+		}
+
+		// Rebuild the admin menu:
+		$cached = array();
+		$last = false;
+		foreach ($profile_areas as $id1 => $area1)
+		{
+			// Build first level menu:
+			$cached[$id1] = array(
+				'title' => $area1['title'],
+				'show' => true,
+				'sub_buttons' => array(),
+			);
+				
+			// Build second level menus:
+			$first = true;
+			if (isset($area1['custom_url']) && !empty($area1['custom_url']))
+			{
+				$cached[$id1]['href'] = $area1['custom_url'];
+				$first = false;
+			}
+			$last = false;
+			foreach ($area1['areas'] as $id2 => $area2)
+			{
+				if (empty($area2['label']))
+					continue;
+				if ($first)
+				{
+					$cached[$id1]['href'] = $scripturl . '?action=profile;area=' . $id2;
+					$first = false;
+				}
+				$cached[$id1]['sub_buttons'][$last = $id2] = array(
+					'title' => $area2['label'],
+					'href' => $scripturl . '?action=profile;area=' . $id2,
+					'show' => (!isset($area2['enabled']) || $area2['enabled']) && !empty($area2['permission']['own']) && allowedTo($area2['permission']['own']),
+				);
+
+				if ($id2 == 'showposts')
+					$cached[$id1]['sub_buttons'][$last = 'showtopics'] = array(
+						'title' => $area2['label'] . ': ' . $txt['topics'],
+						'href' => $scripturl . '?action=profile;area=showposts;sa=topics',
+						'show' => (!isset($area2['enabled']) || $area2['enabled']) && !empty($area2['permission']['own']) && allowedTo($area2['permission']['own']),
+					);
+			}
+			$cached[$id1]['sub_buttons'][$last]['is_last'] = true;
+		}
+
+		if (!empty($modSettings['cache_enable']))
+			cache_put_data('betterprofile_' . $user_info['id'], $cached, 86400);
+		$areas['profile']['sub_buttons'] = $cached;
 	}
+	elseif (is_array($cached))
+		$areas['profile']['sub_buttons'] = $cached;
 
 	// Define the rest of the Profile menu:
 	if (file_exists($sourcedir . '/Bookmarks.php'))
@@ -93,39 +114,6 @@ function BetterProfile_Menu_Buttons(&$areas)
 			'show' => allowedTo('make_bookmarks'),
 		);
 	}
-	if (file_exists($sourcedir . '/Buddies.php'))
-	{
-		loadLanguage('UltimateProfile');
-		$areas['profile']['sub_buttons']['ultimate'] = array(
-			'title' => $txt['profile_customized'],
-			'href' => $scripturl . '?action=profile;area=customized',
-			'show' => allowedTo(array('edit_ultimate_profile_own', 'edit_ultimate_profile_any')),
-		);
-	}
-	if (file_exists($sourcedir . '/Drafts.php'))
-	{
-		loadLanguage('Drafts');
-		$areas['profile']['sub_buttons']['ultimate'] = array(
-			'title' => $txt['permissiongroup_drafts'],
-			'href' => $scripturl . '?action=profile;area=show_drafts',
-			'show' => allowedTo(array('profile_view_own', 'profile_view_any')),
-		);
-	}
-	$areas['profile']['sub_buttons']['notification'] = array(
-		'title' => $txt['notification'],
-		'href' => $scripturl . '?action=profile;area=notification',
-		'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
-	);
-	$areas['profile']['sub_buttons']['ignore'] = array(
-		'title' => $txt['editBuddyIgnoreLists'],
-		'href' => $scripturl . '?action=profile;area=lists;sa=ignore',
-		'show' => allowedTo(array('profile_extra_any', 'profile_extra_own')),
-		'is_last' => true,
-	);
-
-	// Restore the language strings:
-	$txt = $old_txt;
-	LoadLanguage('', '', false, false, $loaded);
 }
 
 ?>

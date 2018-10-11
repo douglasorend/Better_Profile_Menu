@@ -21,7 +21,7 @@ if (SMF == 'SSI')
 // Define the hooks
 $hook_functions = array(
 	'integrate_pre_include' => '$sourcedir/Subs-BetterProfileMenu.php',
-	'integrate_menu_buttons' => 'BetterProfile_Menu_Buttons',
+	'integrate_load_theme' => 'BetterProfile_Load_Theme',
 );
 
 // Adding or removing them?
