@@ -1,3 +1,6 @@
+v2.6 - Februuary 26th, 2018
+o Added Spanish Latin translation, courtsey of [url=https://www.simplemachines.org/community/index.php?action=profile;u=322597]Rock Lee[/url]!
+
 v2.5 - February 17th, 2018
 o Now uses [b]safe_serialize[/b]/[b]safe_unserialize[/b] functions when available.
 o Added dropdown box in [b]Profile[/b] => [b]Look and Layout[/b] to control mod per user.

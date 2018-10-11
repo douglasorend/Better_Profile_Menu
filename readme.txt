@@ -1,5 +1,5 @@
 [hr]
-[center][color=red][size=16pt][b]BETTER PROFILE MENU v2.5[/b][/size][/color]
+[center][color=red][size=16pt][b]BETTER PROFILE MENU v2.6[/b][/size][/color]
 [url=http://www.simplemachines.org/community/index.php?action=profile;u=253913][b]By Dougiefresh[/b][/url] -> [url=http://custom.simplemachines.org/mods/index.php?mod=3904]Link to Mod[/url]
 [/center]
 [hr]
@@ -22,6 +22,9 @@ Each user can set it to one of the following:
 o [b]Completely Disabled[/b] => Exactly like this mod isn't installed :p
 o [b]Enabled[/b] => Exactly like this mod before version 2.4.
 o [b]Enabled with NoClick[/b] => Like Enabled, but clicking profile menu item only opens dropdown.
+
+[color=blue][b][size=12pt][u]Translators[/u][/size][/b][/color]
+o Spanish Latin: [url=https://www.simplemachines.org/community/index.php?action=profile;u=322597]Rock Lee[/url]
 
 [color=blue][b][size=12pt][u]Compatibility Notes[/u][/size][/b][/color]
 This mod was tested on SMF 2.0.12, but should work on any version of SMF 2.0.x.  SMF 1.x and SMF 2.1 is not and will not be supported.
